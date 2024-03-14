@@ -1,0 +1,478 @@
+{
+    "images": [
+        {
+            "name": "jetstack/cert-manager-cainjector",
+            "version": "v1.5.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:e6086257da0376fd4ce4830c620f42ee9cf99479e3adbe286d698a051b47331d"
+        },
+        {
+            "name": "jetstack/cert-manager-controller",
+            "version": "v1.5.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:45f5aa2b5b722b21b24fc85e2ab34281b6a0a06cadeb219d65cef4e900b0698a"
+        },
+        {
+            "name": "jetstack/cert-manager-ctl",
+            "version": "v1.5.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:746e89d6e430026cd1e1e564e8287fd1efdadcc47afe2754347c2d66275d5aed"
+        },
+        {
+            "name": "jetstack/cert-manager-webhook",
+            "version": "v1.5.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:a023f206bf564f5444699569a23942d8f80bf89ecdebfaa768faab73fc281fc0"
+        },
+        {
+            "name": "quay.io/jetstack/cert-manager-cainjector",
+            "version": "v0.15.1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:58b6646b24f55d3472959aecbe74bb1f44bd35ee8878338dc08c5f1f0456b853"
+        },
+        {
+            "name": "quay.io/jetstack/cert-manager-controller",
+            "version": "v0.15.1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:4023bc371f92149527bd671688995bddea05c982a2c8bb22a3ec3012f3233882"
+        },
+        {
+            "name": "quay.io/jetstack/cert-manager-webhook",
+            "version": "v0.15.1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:9ebc8c9819f06ac8e1359c59b0e4fb8094bf73a6af7d464d974e4904b19cc698"
+        },
+        {
+            "name": "rsync/git-client",
+            "version": "1.3.0",
+            "src_repo_name": "dockercentral.it.att.com:5300",
+            "sha":"sha256:c70f7c4af2a0062876f56a8433479603e30d0ba473b444937777a542633edcd5"
+        },
+        {
+            "name": "gloo-wrapper/gloo-wrapper",
+            "version": "1.5.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:3e420485d760b8d119fc64ff34e842fd0c10204cbce7ec131042411925b2182c"
+        },
+        {
+            "name": "gloo-wrapper/gloo-wrapper",
+            "version": "1.6.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:9ad4935fe8538bab9039797942f4cc3f8c59a271d27697c089782db0388410c5"
+        },
+        {
+            "name": "keycloak/keycloak-server",
+            "version": "1.19.7",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:0e5acff12488244d15267053e4b7c2a935a43b3bda3ccdc0dd5fc5a4078fb81f"
+        },
+        {
+            "name": "keycloak/keycloak-config",
+            "version": "1.22.4",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:17fad01d9d48c895977e67c1cb43ec381f2b57fa3dab92288ef0673c3985703b"
+        },
+        {
+            "name": "solo-io/certgen",
+            "version": "1.9.30",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:018f384c2613fe92a09048022e35c457440df1f39df2a4c1ff03e6810e4828fa"
+        },
+        {
+            "name": "solo-io/certgen",
+            "version": "1.10.45",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:7cbb970009cda30ca54497f4cefa7d3df3527d30538a98fbd18370c6567ddc36"
+        },
+        {
+            "name": "solo-io/gloo-envoy-wrapper",
+            "version": "1.9.30",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:c0ed3eb28e32792f8c81235bf31d0104fd40a4eb43d18d6beb7c0bf38b31237c"
+        },
+        {
+            "name": "solo-io/gloo-envoy-wrapper",
+            "version": "1.10.45",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:dce5e38dec5ab0e30442a54983ed9d6995f955c911a46ce47035d285658b7a76"
+        },
+        {
+            "name": "solo-io/gateway",
+            "version": "1.9.30",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:36b2591f5ee2b74f830b6385454b1e2f0109510cf475c9501a1032a7f52d15da"
+        },
+        {
+            "name": "solo-io/gateway",
+            "version": "1.10.45",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:9a87c64d4d9fc9152dba8fc5a185403d2e489473688d24c9d312cd1b352cda7f"
+        },
+        {
+            "name": "solo-io/sds",
+            "version": "1.10.45",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:418b6dc36f6868a0a8f1d501dd894dfe95a30c38d500eec16f22c3ed48e9eb93"
+        },
+        {
+            "name": "vendor-public/sba-base-container-jdk11",
+            "version": "4.2.12",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:9baf157933e2b9efb937678209430917fce3d20f39781314e8b7ecd2ddaebc9c"
+        },
+        {
+            "name": "vendor-public/sba-base-container",
+            "version": "4.2.10",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:8173f8bf4455a227028738645e5f41e7a3aa6b51ba56179790e2785b72d7767e"
+        },
+        {
+            "name": "vendor-public/sba-base-container",
+            "version": "4.2.11",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:df55cc5216a07aec220ebb932a510f5ff2591a03e4f80b567ba8da6a3858c3f8"
+        },
+        {
+            "name": "vendor-public/sba-base-container",
+            "version": "4.2.6",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:6139e6abc8c346a53e9ca471bec6e3f5ab5f925c4fd9030443d46277e07c316f"
+        },
+        {
+            "name": "vendor-public/sba-base-container",
+            "version": "4.3.1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:67616dd7a9fa9a42e03aa708c52b602139ad501c7a91f36241d10429aa440730"
+        },
+        {
+            "name": "vendor-public/k8s-tools",
+            "version": "1.1.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:0c4b192303d5b50493154383205adb9474a6abe4716a96f43ce4a09d56a5cf62"
+        },
+        {
+            "name": "vendor-public/k8s-tools",
+            "version": "1.0.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:efe7658d7eb25d39064ae15c78fea2442d4be1b83d5eb6b78aabb22b5abd4f04"
+        },
+        {
+            "name": "vendor-public/k8s-tools",
+            "version": "1.0.7",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:2f89d5b15679495aa0fc6fdbd7058d770249aa9946e9d7da4d0c74abe65f8328"
+        },
+        {
+            "name": "vendor-public/sba-base-container",
+            "version": "4.0.4",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:3a0bff45398aad45c10b681da5f2f8c8ec57052bc90a40a8353825e707837d6e"
+        },
+        {
+            "name": "hashicorp/consul",
+            "version": "1.13.2",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:226bac7e3a95f0e883cf7af7ea9e2a8b802a09115f5354d8abe48c31cb3ce7ed"
+        },
+        {
+            "name": "hashicorp/consul-k8s-control-plane",
+            "version": "0.49.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:8a914f3410c8410b20a1f67e2b9f36132b9a28d97b83a6a0a3ff7c8cc36b74d5"
+        },
+        {
+            "name": "security/consul-acl-init",
+            "version": "1.5.4",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:08aeac8b095b840ab1e8ec7191ec6187ca690045719161ea2210354bae6e66ef"
+        },
+        {
+            "name": "5g-nf/signaling-manager/base",
+            "version": "1.19.5-1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:4186209c910c5062042086ad46d67ea01993c7ad3b9942c4f888d7179223ce13"
+        },
+        {
+            "name": "5g-nf/signaling-manager/base",
+            "version": "1.20.8",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:0146d169c6dd0aa232bf3ba0589ebd340862fd19a813e717f24f74c10cffa7cc"
+        },
+        {
+            "name": "5g-nf/signaling-manager/sigm_rx_runtime",
+            "version": "1.20.8",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:d830c0ecf8c9a4d38943c67d7332a31ac5e2192ab44842620d5d193b56dab909"
+        },
+        {
+            "name": "5g-nrf/registration-agent-server",
+            "version": "8.17.8",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:695746640850bd3badc80ffe656d15b79147d1573b3b01e67cacec04579c4457"
+        },
+        {
+            "name": "5g-nrf/registration-agent-server",
+            "version": "8.17.2",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:f93d7fad7ec23021b3fc688d2312851b153f7850c710ab9150baa7041be9a1e9"
+        },
+        {
+            "name": "sba-microservice/binding-support-management-server-rel16_10",
+            "version": "6.1.8",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:5689fd5c5f1a64a47801be3946a2b5c1132032fb310680cdcba469c54e9fb5a7"
+        },
+        {
+            "name": "sba-microservice/sba-envoy-ratelimiter-server",
+            "version": "1.3.6",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:e4478f6ea3f582e9397bd1b4791a6a0be4b3084eb1c99b294fdf6c6bf44ad349"
+        },
+        {
+            "name": "sba-microservice/nf2-data-repository-server",
+            "version": "1.12.5-16.3",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:cb835a9404695f7e6193de661a1d11b111f7c1c08509c2ec3a91d07f479c71e8"
+        },
+        {
+            "name": "sba-microservice/operational-tools-server",
+            "version": "1.2.16",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:df36acab82a4fb78043ce82bc1f537aff15436e6e0a8149933b8dfb176a78237"
+        },
+        {
+            "name": "sba-microservice/operational-tools-daemon-server",
+            "version": "1.2.4",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:da3583f1580b489202d0a40af8221fd6ac80e91594ba49b02feb6ea381156828"
+        },
+        {
+            "name": "beats/filebeat",
+            "version": "7.17.7",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:198a06d808b98b07a5df74b01d761e20932ac4e4c2fa6d857ad92a4459331d26"
+        },
+        {
+            "name": "beats/filebeat",
+            "version": "7.17.9",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:b239b353dcd883032f450031ccc39260287bf4314916e425ebae331d31abf77a"
+        },
+        {
+            "name": "beats/filebeat",
+            "version": "7.17.10",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:086f7252a5831864f605dc4fd1c17edecc2370db3c8d0978f8735d4e89bec82d"
+        },
+        {
+            "name": "beats/metricbeat",
+            "version": "7.17.9",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:286ad3caba765cf6aa2927536930e9d5f1c32fe133c149d7ee513d146d75af26"
+        },
+        {
+            "name": "eck/eck-operator",
+            "version": "2.6.1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:8c1a23ae76c68fb60254510674be0e1f17e5f753e9a8b1ca74dc5679f3204543"
+        },
+        {
+            "name": "elasticsearch/elasticsearch",
+            "version": "7.17.9",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:56789f44fd8c451fdeb40a095c5089367e588c7a24e0a03cdbd6ba53ebd84649"
+        },
+        {
+            "name": "kibana/kibana",
+            "version": "7.17.9",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:fef63cfb79ec2bfd9c76fcc41172044781a6ad71354c66505cc7455c69deea03"
+        },
+        {
+            "name": "kube-state-metrics/kube-state-metrics",
+            "version": "v2.7.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:2f4851a097ab81bead7cee8e08673fdc70511b8625ace98798ae8591c9b0c7c9"
+        },
+        {
+            "name": "logstash/logstash",
+            "version": "7.17.10",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:c3af86a6fc0a52089bd456d9d3fc18e7b7d202fbde4211a82f68d3889d1c9f4d"
+        },
+        {
+            "name": "logstash/logstash",
+            "version": "7.17.9",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:8a747338840cb6e49104a1562f33b570abcef33fc273101069a32b92a3291e9d"
+        },
+        {
+            "name": "logstash/logstash-lumberjack",
+            "version": "7.17.7",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf/att",
+            "sha":"sha256:c23d8a62e603410c34028f910e6361a5413c5268cab04a6da8eb77a7dbcacb28"
+        },
+        {
+            "name": "jaegertracing/jaeger-agent",
+            "version": "1.39.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:32df63108c207525ad4ec5c35e7cf73aba0166c1491cc1a046fc096d8dc8e3be"
+        },
+        {
+            "name": "jaegertracing/jaeger-collector",
+            "version": "1.39.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:1b41322329a5924c6c9068b72e1d58a78a29e54f17a12624dc72250334eb0e81"
+        },
+        {
+            "name": "jaegertracing/jaeger-query",
+            "version": "1.39.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:d4a84baf734381f2d6f63a0c488565b08a96ec5c128eb015277697101f77863f"
+        },
+        {
+            "name": "oauth2-proxy/oauth2-proxy",
+            "version": "v7.4.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:29b04745b45e139b7b06f9f5ed0e8b97735292fe3cacab4d4fdff7b9c74ef52c"
+        },
+        {
+            "name": "jaegertracing/jaeger-es-index-cleaner",
+            "version": "1.39.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:ff266a1da9e5f2532bca0a840785895ee08908931ba658c158b726fcf5221b96"
+        },
+        {
+            "name": "jaegertracing/jaeger-es-rollover",
+            "version": "1.39.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:e2d544f2c5201ba62876e0e5cd39fd540ae4f7d5cb7a86ec9cbaf3ef812830a4"
+        },
+        {
+            "name": "app-selector/appselector",
+            "version": "1.3.0-SP3",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:7d4058eaa2aed455216fad724f6f6fc57beb4c5c02231d77b57c8a7abc34664a"
+        },
+        {
+            "name": "rsync/rsync-client",
+            "version": "2.4.6",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:317e0976cb53b71b30264c2f30335d9df46fe0b62d3e1afabb18fe6023bd7de2"
+        },
+        {
+            "name": "rsync/rsync-client",
+            "version": "2.4.2",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:ade824a040a4302d8246f091a1621616f5bbbc2e5c6b0b5bef827b309f3c3964"
+        },
+        {
+            "name": "rsync/rsync-client",
+            "version": "2.4.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:e1f4f4a491f04ff3fdcbab527abc291dd3161719de6a49251b2963ec2178378b"
+        },
+        {
+            "name": "rsync/rsyncd",
+            "version": "2.8.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:4393c74cd75febe232c375b34923b265189726e10508c8b7c59485f9246ac642"
+        },
+        {
+            "name": "curlimages/curl",
+            "version": "7.85.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:20047d5da4ce6fcf2024b3988b3a152646a9b5fa7974cc187d568cef4f2da8fe"
+        },
+        {
+            "name": "curlimages/curl",
+            "version": "7.88.1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:125ce8d7a1ca55dc75ff6085c6b9077451ad92ca32add397cff94704c0a77d46"
+        },
+        {
+            "name": "curlimages/curl",
+            "version": "7.80.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":""
+        },
+        {
+            "name": "sba-housekeeping/logrotate",
+            "version": "2.0.12",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:7b0e42e83a90d5f2bc53da5e41e07cac1e1ab6fb7238d81ec2c9d37571bccda0"
+        },
+        {
+            "name": "sba-housekeeping/logrotate",
+            "version": "2.0.13",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:4355bca825f7baf307a62fd89d3c4b7faf384272a0779ee6579fbe07f9d8c420"
+        },
+        {
+            "name": "sba-housekeeping/logrotate",
+            "version": "2.0.14",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:3e1002da8d03ea8d9869a8cb577fc85973e2d0a495957bbb057de1df0ada34ea"
+        },
+        {
+            "name": "voltdb/voltdb-operator",
+            "version": "1.8.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:93746c79776aadf1d664daffeac54052b5af65c5bc2c9d5dcc20785b8509fe54"
+        },
+        {
+            "name": "voltdb/voltdb-nf2-data-repository",
+            "version": "1.2.11-SP1",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:0a40dfc23e96129b4cd4696ce3d2c2830e08e17b52b40fb4121f542b92675f85"
+        },
+        {
+            "name": "voltdb/voltdb-prometheus",
+            "version": "11.4.5",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:53fcaca9851f70bbf3e3b3c1c47ba574bcc6683cac12e724ef106c2bdb21574f"
+        },
+        {
+            "name": "sig-storage/local-volume-provisioner",
+            "version": "v2.4.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:27444b7b3c8dd5c9015674607db316fb5b8e45348fa1ccabe2c656a70f93ecf0"
+        },
+        {
+            "name": "deploy",
+            "version": "2022.08",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:67957e86b18164e1a254b46673e66abde33806a3e63a24c2e7bdc39453683b00"
+        },
+        {
+            "name": "ums/health-check-tool",
+            "version": "1.1.0",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:1dbad5c9d38231c546436b8f7208884d293c2d50112e6d19cddc7bae75d336be"
+        },
+        {
+            "name": "ui-automation-vendor",
+            "version": "109.0.5414.74",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:5edc08f194533d27ff5aad82684a3e2aa9a6e2f50f31021232845efcf5a84eee"
+        },
+        {
+            "name": "nfvpe/multus",
+            "version": "v3.7",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha":"sha256:f7c168daa367718f2513937f6c455136480488ed6343f5153c636ddcdfac4d94"
+        },
+        {
+            "name": "hyperkube",
+            "version": "v1.16.2",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha": "sha256:df29377c68a836485d98b9d65cf26f4872bf894384506ba9ab3045057f8e1d46"
+        },
+        {
+            "name": "busybox",
+            "version": "latest",
+            "src_repo_name": "dockercentral.it.att.com:5300/com.att.nrpcf",
+            "sha" : "sha256:dcdf379c574e1773d703f0c0d56d67594e7a91d6b84d11ff46799f60fb081c52"
+        }
+    ]
+}

@@ -1,0 +1,273 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Upload Artifacts from Docker Central to  AON AC
+# Author: Vendor, AT&T
+
+parameters:
+  bomFileName: ''
+  publisherResourceGroupName: ''
+
+
+steps:
+
+  #===========================
+  #  PREPARE ADO ENVIORNMENT
+  #===========================
+  - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+
+  #===========================
+  #  OBTAIN DOCKER CENTRAL PASSWORD
+  #===========================
+  - bash: |
+      echo "Get & Decypt Docker Central Password from Key Vault"
+      DOCKER_SECRET=$(az keyvault secret show --subscription $(JVS-SUBSCRIPTION-ID) --name "$(DOCKERCENTRAL_PASS_SECRET)" --vault-name $(KeyVaultName) --query value -o tsv)
+      if [ $? -eq 0 ];then
+          echo " "
+      else
+          echo "##[error] Not able to obtain Docker Central Password from KeyVault. Please check manually"
+          exit 1
+      fi
+      echo "##vso[task.setvariable variable=NEXUS_SECRET;isSecret=True;isOutput=True]$DOCKER_SECRET"
+    name: getDockerSecret
+    displayName: "Pre-job: Get Docker Central Password from Key Vault"
+
+
+  #===========================
+  #  OBTAIN OPC PASSPHRASE
+  #===========================
+  - bash: |
+      echo "Getting OPC Passphrase from Key Vault"
+      OPC_SECRET=$(az keyvault secret show --subscription $(JVS-SUBSCRIPTION-ID) --name $(OPC_PASSPHRASE_SECRET) --vault-name $(KeyVaultName) --query value -o tsv )
+      if [ $? -eq 0 ];then
+          echo " "
+      else
+          echo "##[error] Not able to obtain OPC Passphrase  from KeyVault. Please check manually"
+          exit 1
+      fi
+      echo "##vso[task.setvariable variable=PASSPHRASE_SECRET;isSecret=True;isOutput=True]$OPC_SECRET"
+    name: getOPCPassphrase
+    displayName: "Pre-job: Get OPC Passphrase from Key Vault"
+
+
+  #===========================
+  #  DECRYPT DOCKER PASSWORD
+  #===========================
+  - bash: |
+      nexus_password=$(echo $(getDockerSecret.NEXUS_SECRET) | openssl enc -aes-256-cbc -md sha512 -a -d -pbkdf2 -iter 100000 -salt -pass pass:$(getOPCPassphrase.PASSPHRASE_SECRET))
+      cd  $(Build.SourcesDirectory)
+      echo "export DOCKERCENTRAL_REPO_PASS=$nexus_password" > setenv.sh
+    displayName: 'Decoding the Nexus Secret'
+    continueOnError: false
+
+
+  #===========================
+  #  STORE ARTIFACT STORE ACR DETAILS
+  #===========================
+  - bash: |
+      #Generate a list of charts and images based on the Two (2) Artifact Manifest in the Publisher
+      echo "##[debug] Obtaining the Software Artifact Manifest Name and assinging it to variable:  swManifest_name"
+      swManifest_name=$( az resource list --resource-group ${{ parameters.publisherResourceGroupName }} -o table | grep $(artifactManifestName) | awk '{print $1}' )
+      echo -e "The value assigned to swManifest_name is: $swManifest_name \n\n"
+
+      echo "##[debug] Obtaining the App Artifact Manifest Name and assinging it to variable: appManifest_name"
+      appManifest_name=$( az resource list --resource-group ${{ parameters.publisherResourceGroupName }} -o table | grep $(app_artifact_manifest_name) | awk '{print $1}' )
+      echo -e "The value assigned to appManifest_name is: $appManifest_name \n\n"
+
+      #Obtain the Artifact Manifest ResourceID for each
+      echo "##[debug] Obtaining the Resource ID of the Software Artifact Manifest Name and assigning value to swManifest_id"
+      swManifest_id=$(az resource list --resource-group ${{ parameters.publisherResourceGroupName }}  --name $swManifest_name | jq -r '.[].id')
+      echo -e "The value assigned to swManifest_id is: $swManifest_id\n\n"
+
+      echo "##[debug] Obtaining the Resource ID of the App Artifact Manifest Name and assigning value to appManifest_id"
+      appManifest_id=$(az resource list --resource-group ${{ parameters.publisherResourceGroupName }}  --name $appManifest_name | jq -r '.[].id')
+      echo -e "The value assigned to appManifest_id is: $appManifest_id\n\n"
+
+      #Obtain ACR Credentials of the Publishers
+      az rest --method POST --url "https://management.azure.com/$swManifest_id/listcredential?api-version=2023-09-01" --output json > $(Build.SourcesDirectory)/swAcr_output.json
+      az rest --method POST --url "https://management.azure.com/$appManifest_id/listcredential?api-version=2023-09-01" --output json > $(Build.SourcesDirectory)/appAcr_output.json
+
+      ls -ltr $(Build.SourcesDirectory)
+      cat  $(Build.SourcesDirectory)/swAcr_output.json
+      echo "next"
+      cat $(Build.SourcesDirectory)/appAcr_output.json
+    displayName: 'Store Artifact Store Manifest Credentials'
+
+
+  #===========================
+  #  IMPORT CHARTS & IMAGES TO ACR
+  #===========================
+  - bash: |
+
+      # Run environment variable scripts
+      source $(Build.SourcesDirectory)/setenv.sh
+
+      #Store ACR details for each of the manifest
+      swAcr_name=$(cat $(Build.SourcesDirectory)/swAcr_output.json | jq -r '.acrServerUrl' | sed 's/https:\/\///')
+      swAcr_username=$(cat $(Build.SourcesDirectory)/swAcr_output.json | jq -r '.username')
+      swAcr_password=$(cat $(Build.SourcesDirectory)/swAcr_output.json | jq -r '.acrToken')
+      appAcr_name=$(cat $(Build.SourcesDirectory)/appAcr_output.json | jq -r '.acrServerUrl' | sed 's/https:\/\///')
+      appAcr_username=$(cat $(Build.SourcesDirectory)/appAcr_output.json | jq -r '.username')
+      appAcr_password=$(cat $(Build.SourcesDirectory)/appAcr_output.json | jq -r '.acrToken')
+
+      # Creating a chart or image list based on the BOM file
+      set -x 
+      artifact_objects=$(yq e '.[] | select(.description | test("chart|image|arm-template"))' $(Build.SourcesDirectory)/$(libcodeRepo)/nf/bom/${{ parameters.bomFileName }} -o=json)
+
+      # Convert the JSON string to a JSON array
+      artifact_objects_array=$(echo "$artifact_objects_array" | jq -s .)
+
+      # Get the length of the JSON array
+      artifact_length=$(echo "$artifact_objects" | jq '. | length')
+
+      # Looping through BOM of Helm File Depending on which type of artifact (helm chart, arm-template, or docker image) found in the list proceed accordingly
+      for (( i=0; i<$artifact_length; i++ ))
+      do
+
+        # Get the i-th object from the JSON array
+        artifact=$(echo "$artifact_objects" | jq ".[$i]")
+
+        # Get the description, location, digest, and version of the object
+        name=$(echo $artifact") | jq -r '.name')
+        description=$(echo "$artifact" | jq -r '.description')
+        source_location=$(echo "$artifact" | jq -r '.location')
+        tag=$(echo "$artifact" | jq -r '.digest')
+        version=$(echo "$artifact" | jq -r '.version')
+
+        # HELM CHARTS
+        if [[ $descrption  == *"chart"* ]];; then
+          echo "##[command] Artifact $name is a helm chart, preparing to download/pull from source acr."
+
+          # helm chart Pull from Source ACR
+          #echo "helm registry login $source_location --username $(DOCKERCENTRAL_REPO_USER) --password $DOCKERCENTRAL_REPO_USER"
+          #echo "helm pull oci://$source_location/$repo --version $tag --username $(DOCKERCENTRAL_REPO_USER) --password DOCKERCENTRAL_REPO_USER"
+          echo "wget --user=$(DOCKERCENTRAL_REPO_USER) --password=$DOCKERCENTRAL_REPO_PASS  $source_location"
+          if [ $? -eq 0 ]; then
+              echo "##[section] Succesfully pulled the helm chart"
+          else
+              echo "##[error] Not able to pull the helm chart"
+              exit 1
+          fi
+          sleep 2
+
+          ## helm chart Push to Destination ACR
+          #echo -e "\n"
+          #echo "##[command] helm artifact preparing to push artifact to destination acr."
+          #helm registry login $destination_acr_name --username $destination_acr_username --password $destination_acr_password
+          #echo "${repo:5}"
+          #helm push "${repo:5}"-$tag.tgz oci://$destination_acr_name/helm/
+          #if [ $? -eq 0 ]; then
+              #echo "##[section] Succesfully pushed the helm chart"
+          #else
+              #echo "##[error] Not able to push the helm chart"
+              #exit 1
+          #fi
+          #rm -rf *.tgz
+
+
+          ## arm-template Pull from Source ACR
+          #oras pull $source_location/$repo:$tag --username $source_acr_username --password $source_acr_password > $artifact_temp
+          #if [ $? -eq 0 ]; then
+              #echo "##[section] Succesfully pulled the arm-template"
+          #else
+              #echo "##[error] Not able to pull the arm template"
+              #exit 1
+          #fi
+          #sleep 2
+
+          ## arm-template Push to Destination ACR
+          #echo -e "\n"
+          #echo "##[command] arm-template artifact preparing to push  to destination acr."
+          #oras push $destination_acr_name/$repo:$tag --username $destination_acr_username --password $destination_acr_password $artifact_temp
+          #if [ $? -eq 0 ];then
+              #echo "##[section] Succesfully pushed the arm-template"
+          #else
+              #echo "##[error] Not able to push the arm template"
+              #exit 1
+          #fi
+          #rm -rf *.json
+
+
+          # DOCKER IMAGES
+          elif [[ $description == *"image"* ]]; then
+            echo "##[command] Artifact found $repo is a docker image, preparing to download/pull from source acr."
+
+            # Docker/Oras Image Pull from Source ACR
+            echo "oras login -u $source_acr_username -p $DOCKERCENTRAL_REPO_PASS"
+            if [ $? -eq 0 ]; then
+              echo "oras cp --verbose --from-username $source_acr_username --from-password $source_acr_password  --to-username $destination_acr_username  --to-password $destination_acr_password $source_location/$repo:$tag $destination_acr_name/$repo:$tag"
+              if [ $? -eq 0 ]; then
+                echo "##[section] Succesfully oras copied the docker image from source acr to destination acr"
+              else
+                echo "##[error] Not able to oras copy the docker image from source acr to destination acr"
+                exit 1
+              fi
+            else
+              echo "##[error] Source oras login failed"
+              exit 1
+            fi
+
+          # NOT IMAGE,  CHART, OR ARM-TEMPLATE
+          else
+            echo "The artifiact type is not a DOCKER IMAGE, HELM CHART or an ARM-TEMPLATE."
+            echo "The artificat in question is:"
+            echo $artfifact
+
+        fi
+      done
+    displayName: 'Importing Helm Charts and Docker Images to ACR'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#  - job: get_acr_url_list
+    #container: AZ_IM
+    #displayName: Get ACR URL Lists
+    #timeoutInMinutes: 30
+    #dependsOn: check_publisher_exists
+    #condition: ne(dependencies.check_publisher_exists.outputs['AOSMCLI.ado_output'],'')
+    #steps:
+    #- template: templates/initialize-jobs.yml
+      ## parameters:
+      ##   azureSubscription: ${{parameters.azureSubscription}}
+      ##   resourceGroupName: ${{parameters.resourceGroupName}}
+      ##   spName: ${{parameters.spName}}
+
+#    - template: templates/get-acr-list.yml
+      #parameters:
+        ## arguments: '-s ${{parameters.azureSubscription}} -rg ${{parameters.resourceGroupName}} -o list'
+        #arguments: '-s ${{parameters.publisherAzureSubscription}} -rg ${{parameters.publisherResourceGroupName}} -o list'
+        #spName: ${{parameters.spName}}
+
+#- job: upload_artifacts
+  #timeoutInMinutes: 100
+  #displayName: Upload Artifacts
+  #dependsOn: get_acr_url_list
+  #variables:
+      #varAcrList: $[ dependencies.get_acr_url_list.outputs['GetARCList.ado_output']]
+  #steps:
+  #- template: templates/initialize-jobs.yml
+    ## parameters:
+    ##   azureSubscription: ${{parameters.azureSubscription}}
+    ##   resourceGroupName: ${{parameters.resourceGroupName}}
+    ##   spName: ${{parameters.spName}}
+
+
+  #- template: templates/update-proxy.yml
+    #parameters:
+      #arguments: '$(varAcrList)'
+      #spName: ${{parameters.spName}}
+  #- template: templates/upload-artifacts-cli-template.yml
+    #parameters:
+      ## arguments: '-s ${{parameters.azureSubscription}} -rg ${{parameters.resourceGroupName}}'
+      #arguments: '-s ${{parameters.publisherAzureSubscription}} -rg ${{parameters.publisherResourceGroupName}}'
+      #spName: ${{parameters.spName}}

@@ -1,0 +1,127 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Azure Azure ResourceNaming Template Variables File
+# Author: Vendor, AT&T
+
+variables:
+
+
+#===========================
+# AZURE SHARED PUBLISHER SUBSCRIPTION ID
+#===========================
+- name: "publisherSubscriptionID"
+  ${{ if contains( variables['System.TeamProject'], 'NPRD') }}:
+    value: "1111-1111-1111-1111-1111111111"
+  ${{ elseif and(contains( variables['System.TeamProject'], 'PROD') , contains(  variables['Build.SourceBranchName'], 'deploy-config')) }}:
+    value: "22222-222-2222-2222-2222222222"
+  ${{ elseif contains( variables['System.TeamProject'], 'PROD') }}:
+    value: "22222-222-2222-2222-2222222222"
+
+
+
+#===========================
+# AZURE RESOURCE NAMES/INFO
+#===========================
+
+##  Deployment Names
+- name:  deploymentPublisherName
+  value:  "c$(lcAppName)-publisher-$(majorSoftwareRelease)"
+- name: deploymentDesignerName
+  value: "c$(lcAppName)-designer-$(majorSoftwareRelease)-01"
+- name: deploymentOperatorName
+  value: "c$(lcAppName)-operator-$(majorSoftwareRelease)-01"
+
+
+##  Azure Resource -  Publisher
+- name: publisherResourceGroupName
+  value: "c$(lcAppName)-$(environment)-publisher-$(locationPublisherRG)-rg-01"
+- name: publisherName
+  value:  "c$(lcAppName)-$(environment)-publisher-$(majorSoftwareRelease)-01"
+
+
+##  Azure Resource - Artifact Store
+- name: artifactStoreName
+  value: "c$(lcAppName)-$(environment)-swartifactstore-$(majorSoftwareRelease)-01"
+
+
+##  Azure Resource - Artifact Manifest
+- name: artifactManifestName
+  value: "software-manifest-c$(lcAppName)-$(majorSoftwareRelease)-$(minorSoftwareRelease)-01"
+
+
+##  Azure Resource - NFDG
+- name: nfdgName
+  value: "c$(lcAppName)-$(environment)-nfdg-01"
+
+
+##  Azure Resource - NFDV
+- name: nfdvVersion
+  value: "$(majorSoftwareRelease_number).$(minorSoftwareRelease)"
+- name: releaseNamespace
+  value: "c$(lcAppName)"
+
+
+##  Azure Resource - NSDG
+- name: nsdgName
+  value: "c$(lcAppName)-$(environment)-nsdg-01"
+
+
+##  Azure Resource - NSDV
+- name: nsdvVersion
+  value:  "$(majorSoftwareRelease_number).$(minorSoftwareRelease)"
+- name: nfvisFromSiteName
+  value: "c$(lcAppName)NFvi"
+- name: nsdvDescription
+  value: "$(majorSoftwareRelease_number).$(minorSoftwareRelease)"
+
+
+##  Azure Resource - Global CGS
+- name: globalCGSName
+  value: "c$(lcAppName)-$(environment)-cnf-global-cgs-01"
+
+
+##  Azure Resource - Instance CGS
+- name: instanceCGSName
+  value: "c$(lcAppName)-$(environment)-cnf-instance-cgs-01"
+
+
+##  Azure Resource - Secret CGS
+- name: secretCGSName
+  value: "c$(lcAppName)-$(environment)-cnf-secret-cgs-01"
+
+
+## Azure Resource - NAKs Cluster
+- name: naksRGName
+  value: "c$(lcAppName)-dscpl-$(environment)-$(site_name)-$(lcAppName)-rg-01"
+- name: naksClusterName
+  value: "c$(lcAppName)-$(site_name)-naks-01"
+- name: naksClusterRGName
+  value: "c$(lcAppName)-$(site_name)-naks-01-rg"
+- name: naskVMSSHKey
+  value: "$(site_name)-c$(lcAppName)-naks-pem"
+
+
+## Azure Resource - Site
+- name: siteName
+  value: "c$(lcAppName)-$(site_name)-site-01"
+- name: customLocationID
+  value: "$(json.customLocationID)"
+
+
+##  Azure Resource - Global CGV
+- name:  globalCGVName
+  value: "$(json.globalCGVName)"
+
+
+##  Azure Resource - Instance CGV
+- name:  instanceCGVName
+  value: "$(json.instanceCGVName)"
+
+
+##  Azure Resource - Secret CGV
+- name:  secretCGVName
+  value: "$(json.secretCGVName)"
+
+
+##  Azure Resource - SNS
+- name: snsName
+  value: "$(json.snName)"

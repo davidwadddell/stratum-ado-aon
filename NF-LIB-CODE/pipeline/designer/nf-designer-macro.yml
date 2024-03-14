@@ -1,0 +1,181 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Publisher Creation Pipeline Macro
+# Author: Vendor, AT&T
+
+stages:
+
+  #===========================
+  #   CREATE SOFTWARE ARTIFACT MANIFEST
+  #===========================
+  - stage: createSwArtifactManifest
+    displayName: Create Software Artifact Manifest
+    dependsOn:
+    jobs:
+
+      - job: create_sw_artifact_manifest_resource
+        displayName: Create Software Artifact Manifest Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build Software Artifact Manifest
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'swArtifactManifest'
+              resourceType: 'Software Artifact Manifest'
+              deploymentName: '$(deploymentDesignerName)-sw-artifact-manifest'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'designer'
+
+
+  #===========================
+  #   CREATE CGS - GLOBAL
+  #===========================
+  - stage: createGlobalCgs
+    displayName: Create Global CGS
+    dependsOn:
+    jobs:
+      - job: createGlobalCgs
+        displayName: Create Global CGS Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build Global CGS
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'cgs_global'
+              resourceType: 'Global CGS'
+              deploymentName: '$(deploymentDesignerName)-global-cgs'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'designer'
+
+
+  #===========================
+  #   CREATE CGS - INSTANCE/SITE
+  #===========================
+  - stage: createInstanceCgs
+    displayName: Create Instance CGS
+    dependsOn:
+    jobs:
+      - job: createInstanceCgs
+        displayName: Create Instance CGS Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build Instance CGS
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'cgs_instance'
+              resourceType: 'Instance CGS'
+              deploymentName: '$(deploymentDesignerName)-instance-cgs'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'designer'
+
+
+  #===========================
+  #   CREATE CGS -  SECRET
+  #===========================
+  - stage: createSecretCgs
+    displayName: Create Secret CGS
+    dependsOn:
+    jobs:
+      - job: createSecretCgs
+        displayName: Create Secret CGS Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build Secret CGS
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'cgs_secret'
+              resourceType: 'Secret CGS'
+              deploymentName: '$(deploymentDesignerName)-secret-cgs'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'designer'
+
+
+
+  #===========================
+  #   UPLOAD ARTIFACTS
+  #===========================
+  - stage: uploadArtifacts
+    displayName: Upload Artifacts into Artifact Store
+    dependsOn:
+      - createSwArtifactManifest
+      - createArmArtifactManifest
+    jobs:
+      - job: uploadArtifacts
+        displayName: Uploading Artifacts
+        steps:
+          - template: /pipeline/acr/nf-upload-artifacts-steps-template.yml@LIB-CODE
+            parameters:
+              bomFileName: $(bomFileName)
+              publisherResourceGroupName: $(publisherResourceGroupName)
+
+
+  #===========================
+  #   CREATE NFDV
+  #===========================
+  - stage: createNfdv
+    displayName: Create NFDV
+    dependsOn:
+    jobs:
+      - job: createNFDV
+        displayName: Create NFDV Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build NFDV
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'nfdv'
+              resourceType: 'NFDV'
+              deploymentName: '$(deploymentDesignerName)-nfdv'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'designer'
+
+
+  #===========================
+  #   CREATE NSDV
+  #===========================
+  - stage: createNsdv
+    displayName: Create NSDV
+    dependsOn:
+      - createNfdv
+      - createGlobalCgs
+      - createInstanceCgs
+      - createAppCgs
+      - createSwArtifactManifest
+      - createArmArtifactManifest
+      - uploadArtifacts
+    jobs:
+      - job: createNSDV
+        displayName: Create NSDV Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build NSDV
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'nsdv'
+              resourceType: 'NSDV'
+              deploymentName: '$(deploymentDesignerName)-nsdv'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'designer'

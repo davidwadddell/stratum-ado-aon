@@ -1,0 +1,11 @@
+{
+  "armTemplates": [
+      {
+          "name": "arm-manifest",
+          "version": "1.0.0",
+          "src_repo_name": "FS",
+          "arm_path": "../arm-manifest.json",
+          "credentials": false
+      }
+  ]
+}

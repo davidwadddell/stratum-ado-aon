@@ -1,0 +1,211 @@
+parameters:
+- name: spName
+  type: string
+
+# - name: resourceGroupName
+#   type: string
+# - name: azureSubscription
+#   type: string
+- name: publisherResourceGroupName
+  type: string
+
+- name: publisherAzureSubscription
+  type: string
+- name: operatorResourceGroupName
+  type: string
+- name: operatorAzureSubscription
+  type: string
+
+- name: nfType
+  type: string
+
+- name: environment
+  type: string
+
+- name: location
+  type: string
+
+- name: deployOption
+  type: string
+
+- name: JVSarmConnection
+  type: string
+
+- name: KeyVaultName
+  type: string
+
+
+stages:
+- stage: PreDeployChecks
+  displayName: Pre-check Labels and Taints
+
+  jobs:
+  - template: azure-pipelines/azon-pre-deploy-checks-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: DeployNetworkFunctions
+  displayName: Deploy Network Functions
+  dependsOn: PreDeployChecks
+  condition: |
+    and(
+      in(dependencies.PreDeployChecks.result, 'Succeeded', 'Skipped',''),
+      eq('${{ parameters.deployOption }}', 'Install')
+    )
+  jobs:
+  - template: azure-pipelines/azon-deploy-networkfunction-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: PostInstallJobCreteElasticLicense
+  displayName: Post Install Job - Creating Elastic License
+  condition: |
+    and(
+      in(dependencies.DeployNetworkFunctions.result, 'Succeeded', 'Skipped',''),
+      eq('${{ parameters.deployOption }}', 'Install')
+      )
+  dependsOn: DeployNetworkFunctions
+  jobs:
+  - template: azure-pipelines/azon-post-install-create-elasticlicense-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: PostInstallJobUpdateKeycloak
+  displayName: Post Install Job - Update Keycloak
+  condition: |
+    and(
+      in(dependencies.DeployNetworkFunctions.result, 'Succeeded', 'Skipped',''), 
+      in(dependencies.PostInstallJobCreteElasticLicense.result, 'Succeeded', 'Skipped',''), 
+      eq('${{ parameters.deployOption }}', 'Install')
+      )
+  dependsOn: 
+    - DeployNetworkFunctions
+    - PostInstallJobCreteElasticLicense
+  jobs:
+  - template: azure-pipelines/azon-post-install-update-keycloak-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: PostInstallJobUploadDahsboards
+  displayName: Post Install Job - Upload Dashboards
+  condition: |
+    and(
+      in(dependencies.DeployNetworkFunctions.result, 'Succeeded', 'Skipped',''), 
+      in(dependencies.PostInstallJobCreteElasticLicense.result, 'Succeeded', 'Skipped',''), 
+      in(dependencies.PostInstallJobUpdateKeycloak.result, 'Succeeded', 'Skipped',''), 
+      eq('${{ parameters.deployOption }}', 'Install')
+      )
+  dependsOn: 
+    - PostInstallJobCreteElasticLicense
+    - PostInstallJobUpdateKeycloak
+  jobs:
+  - template: azure-pipelines/azon-post-install-upload-dashboards-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: ValidateDeployNetworkFunctions
+  displayName: Validate Deploy Network Functions
+  dependsOn: PostInstallJobUploadDahsboards
+  condition: |
+    and(
+      in(dependencies.PostInstallJobUploadDahsboards.result, 'Succeeded', 'Skipped',''),
+      in(dependencies.DeployNetworkFunctions.result, 'Succeeded', 'Skipped',''), 
+      eq('${{ parameters.deployOption }}', 'Install')
+      )
+  jobs:
+  - template: azure-pipelines/azon-validate-deploy-networkfunction-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: DeleteOperatorResources
+  displayName: Delete Operator Resources
+  condition: eq('${{ parameters.deployOption }}', 'Uninstall')
+  jobs:
+  - template: azure-pipelines/azon-delete-operator-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}
+
+- stage: ValidateDeleteSNS
+  displayName: Validate Delete Operator Resources
+  dependsOn: DeleteOperatorResources
+  condition: |
+    and(
+      succeeded('DeleteOperatorResources'), 
+      eq('${{ parameters.deployOption }}', 'Uninstall')
+      )
+  jobs:
+  - template: azure-pipelines/azon-validate-delete-sns-micro.yml@LIB-CODE
+    parameters:
+      spName: ${{parameters.spName}}
+      # resourceGroupName: ${{parameters.resourceGroupName}}
+      environment: ${{parameters.environment}}
+      # azureSubscription: ${{parameters.azureSubscription}}
+      publisherResourceGroupName: ${{parameters.publisherResourceGroupName}}
+      publisherAzureSubscription: ${{parameters.publisherAzureSubscription}}
+      operatorResourceGroupName: ${{parameters.operatorResourceGroupName}}
+      operatorAzureSubscription: ${{parameters.operatorAzureSubscription}}
+      location: ${{parameters.location }}
+      nfType: ${{parameters.nfType}}

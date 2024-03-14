@@ -1,0 +1,310 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.23.1.45101",
+      "templateHash": "4531005695555684484"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "nfvId": {
+      "type": "string",
+      "defaultValue": "[parameters('instance_values').nfvId]"
+    },
+    "nfdvId": {
+      "type": "string",
+      "defaultValue": "[parameters('instance_values').nfdvId]"
+    },
+    "cnfName": {
+      "type": "string",
+      "defaultValue": "[parameters('instance_values').cnfName]"
+    },
+    "global_values": {
+      "type": "object"
+    },
+    "instance_values": {
+      "type": "object"
+    },
+    "app_values": {
+      "type": "object"
+    }
+  },
+  "variables": {
+    "roleOverrideChartInfra": {
+      "name": "vendor-infra",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartCertManager": {
+      "name": "cert-manager",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartCaCertManager": {
+      "name": "certmanager-ca",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartKeyclock": {
+      "name": "keycloak",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartConsul": {
+      "name": "consul",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartConsulAcl": {
+      "name": "consul-acl-setup",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartRsyncd": {
+      "name": "rsyncd",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartEckCRD": {
+      "name": "elastic-cloud-kubernetes-crds",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartMonitoring": {
+      "name": "monitoring",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartJaeger": {
+      "name": "jaegertracing",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartUMSDashboard": {
+      "name": "ums-dashboards",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartLogstashBroker": {
+      "name": "logstash-broker",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartUdsfnf": {
+      "name": "nf2-nf",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartOperationTools": {
+      "name": "nf2-voltdb-ops-tools",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartnf": {
+      "name": "nf",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverrideChartnfKibana": {
+      "name": "nf-kibana",
+      "deployParametersMappingRuleProfile": {
+        "helmMappingRuleProfile": {
+          "options": {
+            "installOptions": {
+              "atomic": true,
+              "wait": true,
+              "timeout": 100
+            }
+          }
+        }
+      }
+    },
+    "roleOverRides": [
+      "[string(variables('roleOverrideChartInfra'))]",
+      "[string(variables('roleOverrideChartCertManager'))]",
+      "[string(variables('roleOverrideChartCaCertManager'))]",
+      "[string(variables('roleOverrideChartKeyclock'))]",
+      "[string(variables('roleOverrideChartConsul'))]",
+      "[string(variables('roleOverrideChartConsulAcl'))]",
+      "[string(variables('roleOverrideChartRsyncd'))]",
+      "[string(variables('roleOverrideChartEckCRD'))]",
+      "[string(variables('roleOverrideChartMonitoring'))]",
+      "[string(variables('roleOverrideChartJaeger'))]",
+      "[string(variables('roleOverrideChartUMSDashboard'))]",
+      "[string(variables('roleOverrideChartLogstashBroker'))]",
+      "[string(variables('roleOverrideChartUdsfnf'))]",
+      "[string(variables('roleOverrideChartOperationTools'))]",
+      "[string(variables('roleOverrideChartnf'))]",
+      "[string(variables('roleOverrideChartnfKibana'))]"
+    ],
+    "values": {
+      "global_values": "[parameters('global_values')]",
+      "instance_values": "[parameters('instance_values')]",
+      "app_values": "[parameters('app_values')]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HybridNetwork/networkFunctions",
+      "apiVersion": "2023-09-01",
+      "name": "[parameters('cnfName')]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "configurationType": "Open",
+        "networkFunctionDefinitionVersionResourceReference": {
+          "id": "[parameters('nfdvId')]",
+          "idType": "Open"
+        },
+        "nfviType": "AzureArcKubernetes",
+        "nfviId": "[parameters('nfvId')]",
+        "allowSoftwareUpdate": true,
+        "deploymentValues": "[string(variables('values'))]",
+        "roleOverrideValues": "[variables('roleOverRides')]"
+      }
+    }
+  ]
+}

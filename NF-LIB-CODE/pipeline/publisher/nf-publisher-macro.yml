@@ -1,0 +1,111 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Publisher Creation Pipeline Macro
+# Author: Vendor, AT&T
+
+
+stages:
+
+  #===========================
+  #  CREATE PUBLISHER
+  #===========================
+  - stage: createPublisher
+    displayName: Create Publisher
+    jobs:
+
+      - job: create_publisher_resource
+        displayName: Create Publisher Resource
+        timeoutInMinutes: 30
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build Publisher
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'publisher'
+              resourceType: 'Publisher'
+              deploymentName: "$(deploymentPublisherName)-publisher"
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'publisher'
+
+
+  #===========================
+  #  CREATE SOFTWARE ARTIFACT STORE
+  #===========================
+  - stage: createSwArtifactStore
+    displayName: Create Software Artifact Store
+    dependsOn: createPublisher
+    jobs:
+
+      - job: create_sw_artfiact_store_resource
+        displayName: Create Software Artifact Store Resource
+        timeoutInMinutes: 30
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build Software Artifact Store
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'swArtifactStore'
+              resourceType: 'Software Artifact Store'
+              deploymentName: "$(deploymentPublisherName)-sw-artifact-store"
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'publisher'
+
+
+  #===========================
+  #   CREATE NFDG
+  #===========================
+  - stage: createNfdg
+    displayName: Create NFDG
+    dependsOn: createPublisher
+    jobs:
+
+      - job: create_nfdg_resource
+        displayName: Create NFDG Resource
+        timeoutInMinutes: 30
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build NFDG
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'nfdg'
+              resourceType: 'NFDG'
+              deploymentName: '$(deploymentPublisherName)-nfdg'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'publisher'
+
+
+  #===========================
+  #   CREATE NSDG
+  #===========================
+  - stage: createNsdg
+    displayName: Create NSDG
+    dependsOn: createPublisher
+    jobs:
+
+      - job: create_nsdg_resource
+        displayName: Create NSDG Resource
+        steps:
+
+          # Execute Common Prepare Steps for Publisher RG
+          - template: /pipeline/templates/nf-prepare-steps-template.yml@LIB-CODE
+
+          # az cli to build NSDG
+          - template: /pipeline/azcli/az-deployment-group-steps-template.yml@LIB-CODE
+            parameters:
+              fileName: 'nsdg'
+              resourceType: 'NSDG'
+              deploymentName: '$(deploymentPublisherName)-nsdg'
+              subscriptionID: "$(publishersubscriptionID)"
+              resourceGroupName: "$(publisherResourceGroupName)"
+              bicepFolder: 'publisher'

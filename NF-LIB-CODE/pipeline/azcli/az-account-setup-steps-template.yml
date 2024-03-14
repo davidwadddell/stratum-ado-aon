@@ -1,0 +1,40 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Template to setup proper subscription
+# Author: Vendor, AT&T
+
+
+parameters:
+  setAzureSubscription: ''
+
+
+steps:
+
+    #===========================
+    #   VERIFY AZURE SUBSCRIPTION
+    #===========================
+  - bash: |
+
+      echo "====================================================================="
+      echo "                          AZ CLI Version"
+      echo "====================================================================="
+      az --version
+      echo -e "\n\n"
+
+      echo "====================================================================="
+      echo "                        Show Current Account"
+      echo "====================================================================="
+      az login --service-principal -u $(spID) -p $(spPassword) --tenant $(spTenant) --only-show-errors
+      echo "##[debug] Showing default project post login"
+      az account show
+      echo -e "\n\n"
+
+      echo "====================================================================="
+      echo "                        Set & Display New Subscription"
+      echo "====================================================================="
+      echo "##[debug] Setting AZ Subscription to ${{ parameters.setAzureSubscription }}"
+      az account set -s ${{ parameters.setAzureSubscription }}
+      echo "##[debug] Showing active project post set"
+      az account show
+      test $? -eq 0 || { echo "az login failed"; exit 1 ;}
+      echo -e "\n\n"
+    displayName: 'Pre-Job: Set & Verify Azure Subscription'

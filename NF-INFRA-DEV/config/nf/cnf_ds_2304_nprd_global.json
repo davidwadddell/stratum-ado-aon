@@ -1,0 +1,11 @@
+{
+  "RELEASE_DEFINED_GLOBAL_VALUES": "NF",
+  "CONFIGIT_INPUT_FILE_TYPES": "AON NF Global Input, AON NF Global User Input File",
+  "EXAMPLE_FILENAME_FOR_AON_NF_GLOBAL_INPUT": "CNF_cpl_ds_2304_nprd_globalInput.json",
+  "EXAMPLE_FILENAME_FOR_AON_NF_GLOBAL_USER_INPUT_FILE": "AON_cnf_ds2304_nprd_userValues.xls",
+  "OUTPUT_FILE_STORED": "infraRepo/nf-name/",
+  "CONFIGIT_OUTPUT_FILE_TYPE": "AON NF Global Result File",
+  "EXAMPLE_FILENAME_FOR_AON_NF_GLOBAL_RESULTS_FILE":"cnf_ds_2304_nprd_global.json",
+  "KEY": "Defined by user",
+  "VALUES": "Defined by user"
+}

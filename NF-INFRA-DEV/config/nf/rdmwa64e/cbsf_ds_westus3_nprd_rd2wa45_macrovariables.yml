@@ -1,0 +1,39 @@
+variables:
+
+- name: progRelease
+  value: '2023.04'
+- name: site_name
+  value: 'rdmwa65'
+- name: nfType
+  value: 'NF'
+- name: lcAppName
+  value: 'nf'
+- name: environment
+  value: 'nprd'
+- name: instance_json
+  value: 'zrdmwa65cnf01_2023.04_result.json'
+
+# ADO Specific
+- name: adoEnv
+  value: 'NPRD'
+- name: lcADOEnv
+  value: 'nprd'
+
+# ADO Library
+- group: 'NF-NR-VARLIB-NPRDCE01'
+- group: 'NF-NR-VARLIB-GLOBAL'
+- group: 'JVS-NR-VARLIB-NPRDCE01'
+
+# Azure Specific
+- name: azureRegion
+  value: 'eastus'
+- name: azureServiceConnection
+  value: 'NF-NPRD-SC'
+- name: spID
+  value: $(NF-SP-ID)
+- name: spPassword
+  value: $(NF-SP-PASSWORD)
+- name: spTenant
+  value: $(NF-SP-TENANT)
+- name: storageName
+  value: $(NF-SA-NAME)

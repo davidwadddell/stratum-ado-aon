@@ -1,0 +1,16 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Publisher Creation Pipeline Macro
+# Author: Vendor, AT&T
+
+steps:
+
+  - checkout: LIB-CODE
+    clean: true
+  - checkout: SVC
+    clean: true
+
+
+  # Set subscription to Publisher's Subscription
+  - template: /pipeline/azcli/az-account-setup-steps-template.yml@LIB-CODE
+    parameters:
+      setAzureSubscription: '$(publisherSubscriptionID)'

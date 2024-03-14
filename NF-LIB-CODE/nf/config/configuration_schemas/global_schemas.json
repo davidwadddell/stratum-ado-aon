@@ -1,0 +1,34 @@
+{
+    "description": "description",
+    "type": "object",
+    "properties": {
+        "global_values": {
+            "description": "description",
+            "type": "object",
+            "properties": {
+
+
+                "LDAP_DEFAULT_BIND_DN": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "LDAP_DEFAULT_AUTHTOK": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "LDAP_GROUP_SEARCH_BASE": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "OPERATION_USER": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "SITE_SPECIFIC_VALUES": "NF",
+  "CONFIGIT_INPUT_FILE_TYPES": "AON NF Micro Input, AON NF Site-Specific(micro) User Input File",
+  "EXAMPLE_FILENAME_FOR_AON_NF_MICRO_INPUT": "CNF_cpl_ds_2304_P1_microInput.json",
+  "EXAMPLE_FILENAME_FOR_AON_NF_SITE-SPECIFIC(MICRO)_UESR_INPUT_FILE": "AON_rdmwa65_ds2308_cpl_cnf01_userValues.xls",
+  "OUTPUT_FILE_STORED": "infraRepo/nf-name/site-name/",
+  "CONFIG_OUTPUT_FILE_TYPES": "AON NF Micro Result File, AON NF Macro Result File",
+  "EXAMPLE_FILENAME_FOR_AON_NF_MICRO_RESULT_FILE": "zrdmwa65cnf01_ds_2304_result.json",
+  "MICRO_INPUT_KEYS": "Defined by user",
+  "MICRO_INPUT_VALUES": "TWO TYPES:  1) User Provided; 2) Config-It Calculated",
+  "EXAMPLE_FILENAME_FOR_AON_NF_MACRO_RESULT_FILE": "cnf_ds_eastus_nprd_rdmwa65_macrovariable.yml",
+  "MACRO_INPUT_KEYS": "Defined by user",
+  "MACRO_INPUT_VALUES": "Config-It Calculated"
+}

@@ -1,0 +1,99 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Steps template to execute the  az deployment group command
+# Author: Vendor, AT&T
+
+parameters:
+  fileName: ''
+  resourceType: ''
+  deploymentName: ''
+  subscriptionID: ''
+  resourceGroupName: ''
+  bicepFolder: ''
+
+
+steps:
+
+  #===========================
+  #   SET SUBSCRIPTION
+  #===========================
+  - template: /pipeline/azcli/az-account-setup-steps-template.yml@LIB-CODE
+    parameters:
+      setAzureSubscription: '${{ parameters.subscriptionID }}'
+
+
+  #===========================
+  #   TOKEN REPLACE PARAMS.JSON FILE
+  #===========================
+  - task: replacetokens@5
+    displayName: "Token Replacement for ${{ parameters.fileName }}.params.json File"
+    inputs:
+      targetFiles: |
+        $(Build.SourcesDirectory)/$(libcodeRepo)/code/bicep/${{ parameters.bicepFolder }}/${{ parameters.fileName }}.params.json
+      encoding: "auto"
+      tokenPattern: "default" # Default pattern is #{...}#
+      writeBOM: true
+      actionOnMissing: "warn"
+      verbosity: "detailed"
+      keepToken: false
+      actionOnNoFiles: "fail"
+      useLegacyPattern: false
+      enableTelemetry: true
+      enableTransforms: true
+      enableRecursion: false
+
+
+    #===========================
+    #   DISPLAY BICEP & JSON FILES
+    #===========================
+  - bash:  |
+      echo "====================================================="
+      echo "##[debug]Current Working Directory"
+      echo "====================================================="
+      pwd
+      cd $(Build.SourcesDirectory)/$(libcodeRepo)/code/bicep/${{ parameters.bicepFolder }}
+      echo -e "\n\n"
+      echo "====================================================="
+      echo "##[debug] The current working directory is ##### `pwd` #####"
+      echo "====================================================="
+      echo "List bicep files in the ${{ parameters.bicepFolder }} folder"
+      ls -lrt | grep bicep
+      echo -e "\n\n"
+      echo "====================================================="
+      echo "##[debug] Display the contents of the ${{ parameters.fileName }}.bicep file."
+      echo "====================================================="
+      cat  ${{ parameters.fileName }}.bicep
+      echo -e "\n\n"
+      echo "====================================================="
+      echo "##[debug] Displaying the contents of the ${{ parameters.fileName }}.params.json file."
+      echo "====================================================="
+      cat ${{ parameters.fileName }}.params.json
+      echo -e "\n\n"
+    displayName: 'Display ${{ parameters.resourceType }} bicep File'
+
+
+    #===========================
+    #   CREATE AZURE RESOURCE
+    #===========================
+  - bash: |
+      echo "====================================================="
+      echo "##[debug] Create ${{ parameters.resourceType }} Resource"
+      echo "====================================================="
+      az deployment group create --name ${{ parameters.deploymentName }} --resource-group ${{ parameters.resourceGroupName }} --template-file $(Build.SourcesDirectory)/$(libcodeRepo)/code/bicep/${{ parameters.bicepFolder }}/${{ parameters.fileName }}.bicep --parameters $(Build.SourcesDirectory)/$(libcodeRepo)/code/bicep/${{ parameters.bicepFolder }}/${{ parameters.fileName }}.params.json --verbose
+      if [[ $? -ne 0 ]]; then
+        echo "##[error]Failed to create ${{ parameters.resourceType }} Resource"
+        exit 1
+      fi
+    displayName: 'Create ${{ parameters.resourceType }} Resource'
+
+
+    #===========================
+    #   DISPLAY RESOURCES
+    #===========================
+  - bash: |
+      az account show
+      echo "====================================================================="
+      echo "##[debug]List the Resources which got created under ${{ parameters.resourceGroupName }}"
+      echo "====================================================================="
+      az resource list --resource-group ${{ parameters.resourceGroupName }} --output table
+      echo "====================================================================="
+    displayName: "Check the Deployed Resources"

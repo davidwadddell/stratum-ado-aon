@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "publisherName": {
+      "value": "#{ publisherName }#"
+    },
+    "nsdgName": {
+      "value": "#{ nsdgName }#"
+    },
+    "correlation_id": {
+      "value": "#{ correlationID }#"
+    },
+    "env": {
+      "value": "#{ environment }#"
+    },
+    "automated_by": {
+      "value": "#{ spName }#"
+    },
+    "contact_dl": {
+      "value": "#{ nfContactDL }#"
+    },
+    "app": {
+      "value": "c#{ lcAppName }#"
+    },
+    "prog": {
+      "value": "#{ program }#"
+    },
+    "nf_info": {
+      "value": "{ vendor: #{ vendorName }#, vendor_version: #{majorSoftwareReleaseNumber }# }"
+    },
+    "pipeline_info": {
+      "value": "{ build_version: #{ Build.BuildId }#, pipeline_user: #{ Build.RequestedForEmail }#, pipeline_name: #{ Build.DefinitionName }# }"
+    },
+    "service_info": {
+      "value": "{ service_rel: #{ progRelease }# }"
+    }
+  }
+}

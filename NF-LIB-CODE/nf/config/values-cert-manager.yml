@@ -1,0 +1,16 @@
+image:
+  repository: "jetstack/cert-manager-controller"
+
+webhook:
+  image:
+    repository: "jetstack/cert-manager-webhook"
+
+cainjector:
+  image:
+    repository: "jetstack/cert-manager-cainjector"
+
+startupapicheck:
+  image:
+    repository: "jetstack/cert-manager-ctl"
+
+installCRDs: true

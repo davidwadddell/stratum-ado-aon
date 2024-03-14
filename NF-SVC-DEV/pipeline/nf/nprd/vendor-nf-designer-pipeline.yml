@@ -1,0 +1,60 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Publisher Creation Pipeline
+# Author: Vendor, AT&T
+
+trigger: none
+name: "${{ lower(parameters.azureRegion) }} - NF Designer Flow Pipeline (NPRD) Executed $(date:yyyyMMdd)"
+appendCommitMessageToRunName: false
+
+
+pool: $(JVS-POOL-NAME)
+resources:
+
+  repositories:
+    - repository: LIB-CODE
+      type: git
+      name: 0000-NF-CNF-NPRD/NF-LIB-CODE
+      ref: ${{ parameters.azureBranchLC }}
+    - repository: SVC
+      type: git
+      name: 0000-NF-CNF-NPRD/NF-SVC-DEV
+      ref: ${{ parameters.azureBranchSD }}
+
+
+parameters:
+- name: azureRegion
+  displayName: 'Publisher Azure Region'
+  type: string
+  values:
+  - eastus
+  - westus3
+  - centralus2
+# LAB ONLY PARAMETERS
+
+- name: azureBranchI
+  displayName: 'INFRA Azure Branch'
+  type: string
+- name: azureBranchLC
+  displayName: 'LIB-CODE Azure Branch'
+  type: string
+- name: azureBranchSD
+  displayName: 'SVC Azure Branch'
+  type: string
+
+
+variables:
+- name: location
+  value: ${{ parameters.azureRegion }}
+
+# NF Specific - AT&T ADO Pipeline Variables
+- template: /nf/variables/att-ds-pipeline-template-variables.yml@LIB-CODE
+
+# Generalized - AT&T Azure Resources Naming Convention
+- template: /code/variables/att-ds-az-resource-name-template-variables.yml@LIB-CODE
+
+# NF Specific - vendor NF publisher
+- template: /nf/variables/vendor-nf-template-variables.yml@LIB-CODE
+
+
+stages:
+- template: /pipeline/designer/nf-designer-macro.yml@LIB-CODE

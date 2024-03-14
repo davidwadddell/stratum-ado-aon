@@ -1,0 +1,131 @@
+{
+    "charts": [
+        {
+            "name": "cert-manager",
+            "version": "1.5.5",
+            "src_repo_name": "FS",
+            "chart_path": "../lib/charts/cert-manager-1.5.5.tgz",
+            "credentials": false
+        },
+        {
+            "name": "certmanager-ca",
+            "version": "1.3.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/certmanager-ca-1.3.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "consul",
+            "version": "0.49.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/consul-0.49.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "consul-acl-setup",
+            "version": "1.5.4",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/consul-acl-setup-1.5.4.tgz",
+            "credentials": true
+        },
+        {
+            "name": "rsyncd",
+            "version": "2.8.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/rsyncd-2.8.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "keycloak-assembly",
+            "version": "1.22.4",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/keycloak-assembly-1.22.4.tgz",
+            "credentials": true
+        },
+        {
+            "name": "elastic-cloud-kubernetes-crds",
+            "version": "2.8.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/elastic-cloud-kubernetes-crds-2.8.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "monitoring",
+            "version": "4.6.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/monitoring-4.6.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "jaeger-assembly",
+            "version": "1.5.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/jaeger-assembly-1.5.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "nf2-assembly",
+            "version": "4.0.8-SP1-aosm",
+            "src_repo_name": "FS",
+            "chart_path": "../lib/charts/nf2-assembly-4.0.8-SP1-aosm.tgz",
+            "credentials": true
+        },
+        {
+            "name": "ums-dashboards",
+            "version": "1.5.0-3",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/ums-dashboards-1.5.0-3.tgz",
+            "credentials": true
+        },
+        {
+            "name": "operational-tools",
+            "version": "1.2.16",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/operational-tools-1.2.16.tgz",
+            "credentials": true
+        },
+        {
+            "name": "nf-kubernetes",
+            "version": "2.33.8-1",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/nf-kubernetes-2.33.8-1.tgz",
+            "credentials": true
+        },
+
+        {
+            "name": "nf-kibana-kubernetes",
+            "version": "2.33.8-1",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/nf-kibana-kubernetes-2.33.8-1.tgz",
+            "credentials": true
+        },
+        {
+            "name": "logstash-broker",
+            "version": "0.3.0",
+            "src_repo_name": "dockercentral.it.att.com:8093",
+            "chart_path": "nexus/repository/helm-hosted/com.att.nrpcf/logstash-broker-0.3.0.tgz",
+            "credentials": true
+        },
+        {
+            "name": "aosm-custom",
+            "version": "0.1.0",
+            "src_repo_name": "FS",
+            "chart_path": "../lib/charts/aosm-custom-0.1.0.tgz",
+            "credentials": false
+        },
+        {
+            "name": "nf-kibana-kubernetes",
+            "version": "2.33.8-1-aosm",
+            "src_repo_name": "FS",
+            "chart_path": "../lib/charts/nf-kibana-kubernetes-2.33.8-1-aosm.tgz",
+            "credentials": false
+        },
+        {
+            "name": "vendor-infra",
+            "version": "0.4.5",
+            "src_repo_name": "FS",
+            "chart_path": "../lib/charts/vendor-infra-0.4.5.tgz",
+            "credentials": false
+        }
+    ]
+}

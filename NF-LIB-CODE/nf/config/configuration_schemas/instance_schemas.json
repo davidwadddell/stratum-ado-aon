@@ -1,0 +1,198 @@
+{
+    "description": "description",
+    "type": "object",
+    "properties": {
+        "instance_values": {
+            "description": "description",
+            "type": "object",
+            "properties": {
+                "nfvId": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "nfdvId": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "nfdgroupName": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "nfdversion": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "publisherName": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "cnfName": {
+                    "description": "description",
+                    "type": "string",
+                    "pattern": ""
+                },
+                "ipv6PrefixRanges" : {
+                    "type" : "array",
+                    "items" : {
+                        "type": "object",
+                        "properties": {
+                            "start": {
+                                "type": "string",
+                                "description": "",
+                                "pattern": ""
+                            },
+                            "end": {
+                                "type": "string",
+                                "description": "",
+                                "pattern": ""
+                            }
+                        }
+                    }
+                },
+                "profile-resources": {
+                    "description": "description",
+                    "type": "object",
+                    "properties": {
+                        "registration-agent": {
+                            "description": "description",
+                            "type": "object",
+                            "properties": {
+                                "service": {
+                                    "description": "description",
+                                    "type": "object",
+                                    "properties": {
+                                        "resources": {
+                                            "description": "description",
+                                            "type": "object",
+                                            "properties": {
+                                                "limits": {
+                                                    "description": "description",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "cpu": {
+                                                            "description": "description",
+                                                            "type": "integer",
+                                                            "pattern": "",
+                                                            "default": 1
+                                                        },
+                                                        "memory": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "1G"
+                                                        }
+                                                    }
+                                                },
+                                                "requests": {
+                                                    "description": "description",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "cpu": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "500m"
+                                                        },
+                                                        "memory": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "500M"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "filebeat": {
+                                    "description": "description",
+                                    "type": "object",
+                                    "properties": {
+                                        "resources": {
+                                            "description": "description",
+                                            "type": "object",
+                                            "properties": {
+                                                "limits": {
+                                                    "description": "description",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "cpu": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "40m"
+                                                        },
+                                                        "memory": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "200M"
+                                                        }
+                                                    }
+                                                },
+                                                "requests": {
+                                                    "description": "description",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "cpu": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "40m"
+                                                        },
+                                                        "memory": {
+                                                            "description": "description",
+                                                            "type": "string",
+                                                            "pattern": "",
+                                                            "default": "200M"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "global": {
+                            "description": "description",
+                            "type": "object",
+                            "properties": {
+                                "tracing": {
+                                    "description": "description",
+                                    "type": "object",
+                                    "properties": {
+                                        "config": {
+                                            "description": "description",
+                                            "type": "object",
+                                            "properties": {
+                                                "samplerType": {
+                                                    "description": "description",
+                                                    "type": "string",
+                                                    "pattern": "",
+                                                    "default": "probabilistic"
+                                                },
+                                                "samplerParam": {
+                                                    "description": "description",
+                                                    "type": "string",
+                                                    "pattern": "",
+                                                    "default": "0.001"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

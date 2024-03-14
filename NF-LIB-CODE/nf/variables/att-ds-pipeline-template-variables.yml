@@ -1,0 +1,116 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Publisher Creation Pipeline
+# Author: Vendor, AT&T
+
+variables:
+
+#===========================
+## AT&T PROGRAM
+#===========================
+- name: progRelease
+  value: '2023.04'
+- name: program
+  value: 'DS'
+
+
+#===========================
+## AT&T ENVIRONMENT
+#===========================
+- name: lcADOEnv
+  ${{ if contains( variables['System.TeamProject'], 'NPRD') }}:
+    value: nprd
+  ${{ elseif and(contains( variables['System.TeamProject'], 'PROD') , contains(  variables['Build.SourceBranchName'], 'deploy-config')) }}:
+    value: pprd
+  ${{ elseif contains( variables['System.TeamProject'], 'PROD') }}:
+    value: prod
+
+
+#===========================
+## ADO LIBRARY
+#===========================
+- group: 'JVS-NR-VARLIB-GLOBAL'
+- group: 'NF-NR-VARLIB-GLOBAL'
+- ${{ if contains( variables['System.TeamProject'], 'NPRD') }}:
+  - group: 'NF-NR-VARLIB-NPRDCE01'
+  - group: 'JVS-NR-VARLIB-NPRDCE01'
+- ${{ elseif contains( variables['System.TeamProject'], 'PROD') }}:
+  - group: 'NF-NR-VARLIB-PRODCE01'
+  - group: 'JVS-NR-VARLIB-PRODCE01'
+
+
+#===========================
+## REMOVE NF NAMED ADO LIBRARY VARS
+#===========================
+# NF Service Principal ID
+- name: spID
+  value: $(NF-SP-ID)
+
+# NF Service Prinicipal Password
+- name: spPassword
+  value: $(NF-SP-PASSWORD)
+
+# NF Service Priniciapl Tenant ID
+- name: spTenant
+  value: $(NF-SP-TENANT)
+
+# NF Service Connection
+- name: scName
+  value:  $(NF-SC-NAME)
+
+# NF Service Prinicipal
+- name: spName
+  value:  $(NF-SP-NAME)
+
+# NF KeyVault Name
+- name: kvName
+  value: $(NF-KV-NAME)
+
+# NF Azure Storage Account Name
+- name: stoageAccountName
+  value: $(NF-SA-NAME)
+
+# NF MOTS ID
+- name: correlationID
+  value: $(NF-MOTS-ID)
+
+# JVS Subscrption ID
+- name: jvsSubscriptionID
+  value: $(NF-SUBSCRIPTION-ID)
+
+
+#===========================
+## ADO REPOSITORIES
+#===========================
+# INFRA Repository
+- name: infraRepo
+  ${{ if contains( variables['System.TeamProject'], 'NPRD') }}:
+      value: $(nfType)-INFRA-DEV
+  ${{ elseif contains( variables['System.TeamProject'], 'PROD') }}:
+      value: $(nfType)-INFRA-PROD
+
+# LIB-CODE Repository from NPRD ADO Project
+- name: libcodeRepo
+  value: $(nfType)-LIB-CODE
+
+# SVC Repository
+- name: svcREPO
+  ${{ if contains( variables['System.TeamProject'], 'NPRD') }}:
+      value: $(nyType)-SVC-DEV
+  ${{ elseif contains( variables['System.TeamProject'], 'PROD') }}:
+      value: $(nfType)-SVC-PROD
+
+
+#===========================
+## CONFIG-IT OUTPUT RELATED
+#===========================
+# Path for Config-It Output Files
+- name: configitOutputPath
+  value: $(Build.SourcesDirectory)/$(infraRepo)/config/$(lcAppName)
+
+# Variables for Site Specific Config-It File
+- name: siteSpecificJSON
+  value: $(configitOutputPath)/$(site_name)/$(sitespecific_json)
+
+# Variables for Global (Release) Config-It File
+- name: globalJSON
+  value: $(configitOutputPath)/$(nfCode)_$(progRelease)_$(lcADOEnv)_global.json

@@ -1,0 +1,31 @@
+# ADO Project:  0000-NF-CNF-NPRD
+# Purpose: Publisher Creation Pipeline
+# Author: Vendor, AT&T
+
+variables:
+
+# Vendor
+- name: vendorName
+  value: Vendor
+
+
+# NF Related
+- name: nfType
+  value: 'NF'
+- name: lcAppName
+  value: 'nf'
+
+
+# Version Related
+- name: majorSoftwareRelease
+  value: 1.0R0
+- name: majorSoftwareReleaseNumber
+  value: 1.0
+- name: minorSoftwareRelease
+  value: 00
+- name: armManifestVersion
+  value: 1.0
+
+# LAB Team
+- name: nfContactDL
+  value: "dl@att.com"
