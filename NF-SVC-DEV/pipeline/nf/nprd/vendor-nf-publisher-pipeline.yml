@@ -13,11 +13,11 @@ resources:
   repositories:
     - repository: LIB-CODE
       type: git
-      name: 0000-NF-CNF-NPRD/NF-LIB-CODE
+      name: stratum-ado-aon/NF-LIB-CODE
       ref: ${{ parameters.azureBranchLC }}
     - repository: SVC
       type: git
-      name: 0000-NF-CNF-NPRD/NF-SVC-DEV
+      name: stratum-ado-aon/NF-SVC-DEV
       ref: ${{ parameters.azureBranchSD }}
 
 
