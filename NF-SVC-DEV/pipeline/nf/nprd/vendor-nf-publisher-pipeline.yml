@@ -17,7 +17,7 @@ resources:
       ref: ${{ parameters.azureBranchLC }}
     - repository: SVC
       type: git
-      name: /NF-SVC-DEV
+      name: stratum-ado-aon/NF-SVC-DEV
       ref: ${{ parameters.azureBranchSD }}
 
 
