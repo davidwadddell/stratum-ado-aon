@@ -13,7 +13,7 @@ resources:
   repositories:
     - repository: LIB-CODE
       type: git
-      name: davidwadddell.stratum-ado-aon/NF-LIB-CODE
+      name: stratum-ado-aon/NF-LIB-CODE
       ref: ${{ parameters.azureBranchLC }}
     - repository: SVC
       type: git
