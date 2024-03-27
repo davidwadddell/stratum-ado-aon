@@ -7,6 +7,7 @@ name: "${{ lower(parameters.azureRegion) }} - NF Publisher Flow Pipeline (NPRD) 
 appendCommitMessageToRunName: false
 
 
+
 pool: $(JVS-POOL-NAME)
 resources:
 
@@ -47,6 +48,8 @@ parameters:
 variables:
 - name: location
   value: ${{ parameters.azureRegion }}
+- name: System.Debug
+  value: true
 
 # NF Specific - AT&T ADO Pipeline Variables
 - template: /nf/variables/att-ds-pipeline-template-variables.yml@LIB-CODE
