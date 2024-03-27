@@ -52,7 +52,7 @@ variables:
   value: true
 
 # NF Specific - AT&T ADO Pipeline Variables
-- template: /nf/variables/att-ds-pipeline-template-variables.yml@LIB-CODE
+- template: /nf/variables/att-ds-pipeline-templat-variables.yml@LIB-CODE
 
 # Generalized - AT&T Azure Resources Naming Convention
 #- template: /code/variables/att-ds-az-resource-name-template-variables.yml@LIB-CODE
