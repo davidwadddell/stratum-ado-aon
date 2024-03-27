@@ -11,13 +11,13 @@ pool: $(JVS-POOL-NAME)
 resources:
 
   repositories:
-    - repository: stratum-ado-aon/LIB-CODE
+    - repository: LIB-CODE
       type: git
-      name: stratum-ado-aon/NF-LIB-CODE
+      name: NF-LIB-CODE
       ref: ${{ parameters.azureBranchLC }}
     - repository: SVC
       type: git
-      name: stratum-ado-aon/NF-SVC-DEV
+      name: /NF-SVC-DEV
       ref: ${{ parameters.azureBranchSD }}
 
 
