@@ -11,7 +11,7 @@ pool: $(JVS-POOL-NAME)
 resources:
 
   repositories:
-    - repository: LIB-CODE
+    - repository: stratum-ado-aon/LIB-CODE
       type: git
       name: stratum-ado-aon/NF-LIB-CODE
       ref: ${{ parameters.azureBranchLC }}
