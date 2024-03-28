@@ -8,7 +8,9 @@ appendCommitMessageToRunName: false
 
 
 
-pool: $(JVS-POOL-NAME)
+pool:
+  name:  $(JVS-POOL-NAME)
+  
 resources:
 
   repositories:
