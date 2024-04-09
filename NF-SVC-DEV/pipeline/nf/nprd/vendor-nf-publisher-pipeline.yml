@@ -9,7 +9,8 @@ appendCommitMessageToRunName: false
 
 
 pool:
-  name:  $(JVS-POOL-NAME)
+#  name:  $(JVS-POOL-NAME)
+   name: msft-lab
   
 resources:
 
