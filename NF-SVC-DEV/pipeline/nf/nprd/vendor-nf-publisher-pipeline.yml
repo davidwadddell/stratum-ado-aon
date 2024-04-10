@@ -58,10 +58,10 @@ variables:
 - template: /nf/variables/att-ds-pipeline-template-variables.yml@LIB-CODE
 
 # Generalized - AT&T Azure Resources Naming Convention
-#- template: /code/variables/att-ds-az-resource-name-template-variables.yml@LIB-CODE
+- template: /code/variables/att-ds-az-resource-name-template-variables.yml@LIB-CODE
 
 ## NF Specific - vendor NF publisher
-#- template: /nf/variables/vendor-nf-template-variables.yml@LIB-CODE
+- template: /nf/variables/vendor-nf-template-variables.yml@LIB-CODE
 
 
 stages:
